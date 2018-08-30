@@ -8,6 +8,7 @@ var Enemy = function (x, y) {
   this.sprite = 'images/enemy-bug.png';
   this.x = x;
   this.y = y;
+  this.move = 1;
 };
 
 // Update the enemy's position, required method for game
@@ -16,7 +17,7 @@ Enemy.prototype.update = function (dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
-  this.x += 1;
+  this.x += this.move;
   if (this.x > 500) {
     this.x = -100;
   }
@@ -33,15 +34,16 @@ Enemy.prototype.render = function () {
 var Player = function () {
   this.sprite = 'images/char-boy.png';
   this.x = 200;
-  this.y = 350;
+  this.y = 405;
 };
 Player.prototype.update = function (dt) {
-  // Check collision
+  // Collision detection
   for (let enemy of allEnemies) {
     let deltax = this.x - enemy.x - 15;
     let deltay = this.y - enemy.y - 20;
     let distance = Math.sqrt(deltax * deltax + deltay * deltay);
     if (distance < 56) {
+      enemy.move = 0;
       console.log('hit');
     }
   }
@@ -52,16 +54,16 @@ Player.prototype.render = function () {
 Player.prototype.handleInput = function (dt) {
   switch (dt) {
     case "up":
-      this.y -= 50;
+      this.y -= 84;
       break;
     case "down":
-      this.y += 50;
+      this.y += 84;
       break;
     case "left":
-      this.x -= 50;
+      this.x -= 104;
       break;
     case "right":
-      this.x += 50;
+      this.x += 104;
       break;
   }
 };
@@ -70,7 +72,7 @@ Player.prototype.handleInput = function (dt) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(-200, 65), new Enemy(-150, 145), new Enemy(-100, 230)];
+var allEnemies = [new Enemy(-200, 62), new Enemy(-150, 146), new Enemy(-100, 230)];
 var player = new Player();
 
 
