@@ -34,7 +34,7 @@ Enemy.prototype.render = function () {
 var Player = function () {
   this.sprite = 'images/char-boy.png';
   this.x = 200;
-  this.y = 405;
+  this.y = 410;
 };
 Player.prototype.update = function (dt) {
   // Collision detection
@@ -43,9 +43,13 @@ Player.prototype.update = function (dt) {
     let deltay = this.y - enemy.y - 20;
     let distance = Math.sqrt(deltax * deltax + deltay * deltay);
     if (distance < 56) {
-      enemy.move = 0;
       console.log('hit');
     }
+  }
+  // Did player win
+  if (this.y < 10) {
+    console.log('woot!');
+    this.y = 410;
   }
 };
 Player.prototype.render = function () {
