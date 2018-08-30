@@ -1,13 +1,13 @@
 // Enemies our player must avoid
-var Enemy = function () {
+var Enemy = function (x, y) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
-  this.x = 10;
-  this.y = 100;
+  this.x = x;
+  this.y = y;
 };
 
 // Update the enemy's position, required method for game
@@ -18,7 +18,7 @@ Enemy.prototype.update = function (dt) {
   // all computers.
   this.x += 1;
   if (this.x > 500) {
-    this.x = 0;
+    this.x = -100;
   }
 };
 
@@ -36,6 +36,15 @@ var Player = function () {
   this.y = 350;
 };
 Player.prototype.update = function (dt) {
+  // Check collision
+  for (let enemy of allEnemies) {
+    let deltax = this.x - enemy.x - 15;
+    let deltay = this.y - enemy.y - 20;
+    let distance = Math.sqrt(deltax * deltax + deltay * deltay);
+    if (distance < 56) {
+      console.log('hit');
+    }
+  }
 };
 Player.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -61,7 +70,7 @@ Player.prototype.handleInput = function (dt) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy()];
+var allEnemies = [new Enemy(-200, 65), new Enemy(-150, 145), new Enemy(-100, 230)];
 var player = new Player();
 
 
